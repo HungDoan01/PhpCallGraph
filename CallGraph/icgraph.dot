@@ -1,0 +1,27 @@
+digraph "get_mime_type"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="get_mime_type",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="WP_Image_Editor_Imagick\\load",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___imagick.html#a4dcaa8f72c8423d4de25a9e87fa6f3e4"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="get_output_format",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor.html#ad3551587426e8fdf1cd26ad2b5b556de"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="WP_Image_Editor_GD\l\\_save",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___g_d.html#afb1d6441a1b9acab1813824667184d66"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="WP_Image_Editor_GD\l\\multi_resize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___g_d.html#a8956765f592ae2df47141b1aa72c6d14"];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="WP_Image_Editor_GD\\save",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___g_d.html#acfcf0c84203ec61e87bf75e87d5951f0"];
+  Node3 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="WP_Image_Editor_GD\l\\stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___g_d.html#a46b439d3e81301dd429b47061cc93af6"];
+  Node3 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="WP_Image_Editor_Imagick\l\\_save",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___imagick.html#afb1d6441a1b9acab1813824667184d66"];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="WP_Image_Editor_Imagick\l\\multi_resize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___imagick.html#a8956765f592ae2df47141b1aa72c6d14"];
+  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="WP_Image_Editor_Imagick\\save",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___imagick.html#a32843da2913b5e96abb9891887394043"];
+  Node3 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="WP_Image_Editor_Imagick\l\\stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_w_p___image___editor___imagick.html#a46b439d3e81301dd429b47061cc93af6"];
+}
