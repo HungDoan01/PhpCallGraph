@@ -80,17 +80,24 @@ class PhpCallGraph(object):
         html = response.read()        
         dom = htmldom.HtmlDom().createDom(str(html))
         element = dom.find("a#" + url[1]).next("div.memitem")
-        elementStr = element.html()
+        elementHtml = element.html().replace("\n","")
+        
+        codeLines = re.findall(r'<div class="line">(.*?)</div?', elementHtml)
+        
+        elementStr = ""
+        for codeLine in codeLines:   
+            elementStr +=  codeLine + "\n"
+
         for inputVariable in PhpCallGraph.inputVariables:
             if (elementStr.find(inputVariable) != -1):
                 resultInputs.append(inputVariable)
-                print (elementStr)
-          
+                
+        
         return resultInputs
    
     def printShortestPathLenFromInput(self):
         for inputFunction in self.inputFunctions.keys():           
-            print(nx.shortest_path(self.callGraph, inputFunction, "get_mime_type"), nx.shortest_path_length(self.callGraph, inputFunction, "get_mime_type"))
+            print(nx.shortest_path(self.callGraph, inputFunction, "get_allowed_mime_types"), nx.shortest_path_length(self.callGraph, inputFunction, "get_allowed_mime_types"))
         
         
     def getInputFunctions(self):

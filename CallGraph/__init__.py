@@ -6,7 +6,7 @@ from htmldom import htmldom
 # import matplotlib.pyplot as plt
  
 initialPath = 'file:///C:/CallGraphOutput/3.9/html/'
-callGraphObject = PhpCallGraph("", "icgraph.dot", initialPath)
+callGraphObject = PhpCallGraph("cgraph.dot", "icgraph.dot", initialPath)
 
 print(callGraphObject.getInputFunctions())
 
