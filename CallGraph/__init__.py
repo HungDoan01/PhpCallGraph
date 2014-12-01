@@ -5,10 +5,10 @@ import urllib.request
 from htmldom import htmldom
 # import matplotlib.pyplot as plt
  
-initialPath = 'file:///C:/CallGraphOutput/3.9/html/'
+initialPath = 'file:///' + 'C:\\CallGraphOutput\\3.9\\html\\'
 callGraphObject = PhpCallGraph("cgraph.dot", "icgraph.dot", initialPath)
 
-print(callGraphObject.getInputFunctions())
+callGraphObject.printShortestPathLenFromInput()
 
 # var = callGraph.getInputFunctions()
 # print(var)
