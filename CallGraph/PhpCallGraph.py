@@ -8,6 +8,7 @@ import re
 import urllib.request
 from htmldom import htmldom
 from _overlapped import NULL
+import os
 class PhpCallGraph(object):
     '''
     classdocs
@@ -18,24 +19,26 @@ class PhpCallGraph(object):
 
         #Build The Call Graph
         self.inputFunctions = {}
-        if (not callGraphFile == ""):
+        if (not callGraphFile == "" and os.path.isfile(callGraphFile)):
             
             fd = open(callGraphFile, 'r')
             data = fd.read()
             fd.close()   
             
-            self.callGraph, self.callGraphFunctionsUrl = self.getCallGraph(data)               
+            self.callGraph, self.callGraphFunctionsUrl = self.getCallGraph(data)    
+            print("Call Graph -----------" + self.firstNode)           
             for function in self.callGraphFunctionsUrl.keys():
                 inputs = self.getInputVariables(function, self.callGraphFunctionsUrl[function], initialPath)          
                 if (len(inputs) > 0):
                     self.inputFunctions[function] = inputs
         
         #Build The Called By Graph            
-        if (not calledByGraphFile == ""):
+        if (not calledByGraphFile == "" and os.path.isfile(calledByGraphFile)):              
             fd = open(calledByGraphFile, 'r')
             data = fd.read()
             fd.close()   
             self.calledByGraph, self.calledByGraphFunctionUrl = self.getCallGraph(data)
+            print("Called By Graph -----------" + self.firstNode)
             for function in self.calledByGraphFunctionUrl.keys():
                 inputs = self.getInputVariables(function, self.calledByGraphFunctionUrl[function], initialPath)          
                 if (len(inputs) > 0):
@@ -58,7 +61,6 @@ class PhpCallGraph(object):
                 
                 if (nodeIndex.group(1) == "1"):
                     self.firstNode = name
-                    print(self.firstNode)
                 
                 
                 functions[nodeIndex.group(1)] = name
@@ -81,6 +83,7 @@ class PhpCallGraph(object):
         return G, functionsUrl
         
     def getInputVariables(self, function = "", urlStr = "", initialPath = ""):   
+        print("Working on: " + function)
         resultInputs = []     
         url = urlStr.split("#")
         response = urllib.request.urlopen(initialPath + url[0])
@@ -100,13 +103,16 @@ class PhpCallGraph(object):
                 resultInputs.append(inputVariable)
                 
         
+        if (len(resultInputs) > 0):
+            print(resultInputs)
+        
         return resultInputs
    
     def printShortestPathLenFromInput(self):
         for inputFunction in self.inputFunctions.keys():   
-            if (self.callGraph.has_node(inputFunction)):     
+            if (hasattr(self, 'callGraph') and self.callGraph.has_node(inputFunction)):     
                 print(nx.shortest_path(self.callGraph, inputFunction, self.firstNode), nx.shortest_path_length(self.callGraph, inputFunction, self.firstNode))
-            if (self.calledByGraph.has_node(inputFunction)):     
+            if (hasattr(self, 'calledByGraph') and self.calledByGraph.has_node(inputFunction)):     
                 print(nx.shortest_path(self.calledByGraph, inputFunction, self.firstNode), nx.shortest_path_length(self.calledByGraph, inputFunction, self.firstNode))
         
     def getInputFunctions(self):
