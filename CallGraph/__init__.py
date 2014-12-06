@@ -3,16 +3,27 @@ import networkx as nx
 from CallGraph.PhpCallGraph import PhpCallGraph
 import urllib.request
 from htmldom import htmldom
+import os
 # import matplotlib.pyplot as plt
  
-initialPath = 'file:///' + 'C:\\CallGraphOutput\\3.6\\html\\'
-callGraphObject = PhpCallGraph("cgraph.dot", "icgraph.dot", initialPath)
+initialPath = 'file:///' + 'C:\\CallGraphOutput\\3.1\\html\\' 
+#callGraphObject = PhpCallGraph("cgraph.dot", "icgraph.dot", initialPath)
 
-callGraphObject.printShortestPathLenFromInput()
+rootDir = r'C:\\Users\\hdoan\\git\\PhpCallGraph\\Vulnerabilities\\' + r'CVE-2011-3128 - 3.1'
+
+for dirName, subdirList, fileList in os.walk(rootDir):
+    callGraphPath = dirName + r'\\cgraph.dot'
+    callbyGraphPath = dirName + r'\\icgraph.dot'
+    callGraphObject = PhpCallGraph(callGraphPath, callbyGraphPath, initialPath)
+    callGraphObject.printShortestPathLenFromInput()
+    print('=========================================================================================')
+
+
+#callGraphObject.printShortestPathLenFromInput()
 
 # var = callGraph.getInputFunctions()
 # print(var)
-print("done")
+print("done++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 # fd = open("icgraph.dot", 'r')
 # data = fd.read()
 # fd.close()

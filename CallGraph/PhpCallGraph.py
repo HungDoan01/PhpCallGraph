@@ -26,7 +26,7 @@ class PhpCallGraph(object):
             fd.close()   
             
             self.callGraph, self.callGraphFunctionsUrl = self.getCallGraph(data)    
-            print("Call Graph -----------" + self.firstNode)           
+            print("Working on Call Graph -----------" + self.firstNode)           
             for function in self.callGraphFunctionsUrl.keys():
                 inputs = self.getInputVariables(function, self.callGraphFunctionsUrl[function], initialPath)          
                 if (len(inputs) > 0):
@@ -38,7 +38,7 @@ class PhpCallGraph(object):
             data = fd.read()
             fd.close()   
             self.calledByGraph, self.calledByGraphFunctionUrl = self.getCallGraph(data)
-            print("Called By Graph -----------" + self.firstNode)
+            print("Working on Called By Graph -----------" + self.firstNode)
             for function in self.calledByGraphFunctionUrl.keys():
                 inputs = self.getInputVariables(function, self.calledByGraphFunctionUrl[function], initialPath)          
                 if (len(inputs) > 0):
@@ -83,7 +83,6 @@ class PhpCallGraph(object):
         return G, functionsUrl
         
     def getInputVariables(self, function = "", urlStr = "", initialPath = ""):   
-        print("Working on: " + function)
         resultInputs = []     
         url = urlStr.split("#")
         response = urllib.request.urlopen(initialPath + url[0])
@@ -101,19 +100,26 @@ class PhpCallGraph(object):
         for inputVariable in PhpCallGraph.inputVariables:
             if (elementStr.find(inputVariable) != -1):
                 resultInputs.append(inputVariable)
-                
-        
-        if (len(resultInputs) > 0):
-            print(resultInputs)
-        
         return resultInputs
    
     def printShortestPathLenFromInput(self):
-        for inputFunction in self.inputFunctions.keys():   
-            if (hasattr(self, 'callGraph') and self.callGraph.has_node(inputFunction)):     
-                print(nx.shortest_path(self.callGraph, inputFunction, self.firstNode), nx.shortest_path_length(self.callGraph, inputFunction, self.firstNode))
-            if (hasattr(self, 'calledByGraph') and self.calledByGraph.has_node(inputFunction)):     
-                print(nx.shortest_path(self.calledByGraph, inputFunction, self.firstNode), nx.shortest_path_length(self.calledByGraph, inputFunction, self.firstNode))
+        if (hasattr(self, 'callGraph')):
+            print("Input Variables for call-graph:")
+            for inputFunction in self.inputFunctions.keys(): 
+                if (self.callGraph.has_node(inputFunction)):
+                    print(inputFunction)
+                    print(self.inputFunctions[inputFunction])
+                    print(nx.shortest_path_length(self.callGraph, inputFunction, self.firstNode))
+                    print(".........")
+        if (hasattr(self, 'calledByGraph')):     
+            print("Input Variables for called-by-graph:")   
+            for inputFunction in self.inputFunctions.keys():  
+                if (self.calledByGraph.has_node(inputFunction)):  
+                    print(inputFunction)
+                    print(self.inputFunctions[inputFunction])    
+                    print(nx.shortest_path_length(self.calledByGraph, inputFunction, self.firstNode))
+                    print(".........")
+
         
     def getInputFunctions(self):
         return self.inputFunctions;
